@@ -30,7 +30,7 @@ Note:  All provided material to redo our results are in Data folder.
 
 # Scripts:  
 
-	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node.  
+	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node.
                	Inputs:  
 			functional connectivity matrix (n*n*m)
 		Outputs:
