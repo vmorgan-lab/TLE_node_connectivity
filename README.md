@@ -44,9 +44,9 @@ Note:  All provided material to redo our results are in Data folder.
 			G: grouping variables for subjects with multiple acquisitions (assign same number to them).
 		Outputs:
 		       mixed: linear mixed model 
-                       p: p-value of the test, returned as a scalar value in the range [0,1]
-        	       t: value of the test statistic
-        	       estimate: model coefficient
+                       p: p-value of the test, returned as a scalar value in the range [0,1]  
+        	       t: value of the test statistic  
+        	       estimate: model coefficient  
 
 	•	[fc_corrected]=FC_correction(FC,covariates) will correct your FC feature matrix for covariates by using linear regression model
 		Inputs: 
