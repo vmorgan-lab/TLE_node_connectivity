@@ -7,7 +7,7 @@ Behnaz Akbarian, Lucas E. Sainburg, Andrew P. Janson, Graham W. Johnson, Derek J
 Summary:
 These scripts will allow you to compute the node strength, then find the relationship between FC node strength and seizure outcomes by using linear mixed model and finally plot figures
 
-To run this set of scripts you will need the following inputs:
+To run this set of scripts you will need the following inputs: (`<br>`)
 	•	Functional connectivity matrices of your cohort as a matrix (n*n*m): n: number of regions and m: number of subjects
 	•	Surgical outcome values of your cohort as a vector (m*1)
 	•	Duration of disease prior to surgery values of your cohort as a vector (m*1)
