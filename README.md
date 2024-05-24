@@ -26,7 +26,7 @@ Note:  add more variables (as a vector) or remove each of the variables (duratio
 
 Note:  All provided material to redo our results are in Data folder. 
 
-Scripts:
+# Scripts:
 
 	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node.
                  input:  functional connectivity matrix (n*n*m) 			        
