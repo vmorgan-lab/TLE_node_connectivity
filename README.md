@@ -1,92 +1,55 @@
 # TLE_node_connectivity
 Comparison of post-surgical node strength in seizure free and non-seizure-free TLE patients and plot figures (Akbarian et al,  Neurology 2024)
 
-Behnaz Akbarian, Lucas E. Sainburg, Andrew P. Janson, Graham W. Johnson, Derek J. Doss, Baxter P. Rogers, Dario J. Englot, and Victoria L. Morgan. Functional connectivity after surgery related to seizure freedom in patients with temporal lobe epilepsy. Neurology 2024.
-
+Based on the manuscripts:
+Behnaz Akbarian, Lucas E. Sainburg, Andrew P. Janson, Graham W. Johnson, Derek J. Doss, Baxter P. Rogers, Dario J. Englot, and Victoria L. Morgan. “Functional connectivity after surgery related to seizure freedom in patients with temporal lobe epilepsy”. Neurology 2024.
 
 Summary:
-These scripts will allow you to compute…
-
-
+These scripts will allow you to compute the node strength, then find the relationship between FC node strength and seizure outcomes by using linear mixed model and finally plot figures
 
 To run this set of scripts you will need the following inputs:
-•	Functional connectivity matrices of your cohort as a cell (n*n*m): n: number of regions and m: number of subjects
-•	Other variables???
+	•	Functional connectivity matrices of your cohort as a matrix (n*n*m): n: number of regions and m: number of subjects
+	•	Surgical outcome values of your cohort as a vector (m*1)
+	•	Duration of disease prior to surgery values of your cohort as a vector (m*1)
+	•	Post-surgical follow-up of your cohort as a vector (m*1)
+	•	Grouping variable of your cohort as a vector (m*1): assign same number for data related to the same patient
 
+Note:  add more variables (as a vector) or remove each of the variables (duration of disease and post surgical follow-up variables) based on your study.
 
+ We provide:
+ 	•	Post-surgical and pre-surgical Functional connectivity matrices of our cohort (FC_post.mat, FC_pre.mat)
+	•	Surgical outcome values of our cohort (Outcome.mat)
+	•	Duration of disease prior to surgery values of our cohort (Duration.mat)
+	•	Post-surgical follow-up of our cohort (Time.mat)
+	•	Grouping variable of our cohort (Group.mat)
+	•	Regions of interest resulted from MultiAtlas + free surfer (rois.xlsx)
 
-1.	You need functional connectivity matrices of your cohort as a cell (n*n*m): n: number of regions and m: number of subjects
-We provide 3 node examples from our manuscript: F_CCO.mat, F_ICO.mat, F_IPIns.mat
-2.	The Node_strength(FC) will calculate the node strength for each subject in each node, the output is a matrix with each row is related to the node strength for each subject
-LMM_analysis(response,random,X,G) will do linear mixed model, as response you can put the node strength, factor loadings or change in node strength from pre to post, G is grouping variables for subjects with multiple acquisitions (assign same number to them)
-[lambda,F,nBasis]=factor_analysis(FC_node), input your data as a matrix which is functional connectivity of one node of interest to other nodes for m subjects (m*n)
-[fc_corr] = FC_correction(FC,T,D), input your functional connectivity and covariates that you want to correct your data
-F_CCO.mat, F_ICO.mat, and F_IPIns.mat are the results of factor analysis in our paper. Assign them as input to the Plot_FC_patterns to plot figures 3, 4 and 5. 
-	
+Note:  All provided material to redo our results are in Data folder. 
 
+Scripts:
+	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node: input is functional connectivity matrix (n*n*m) 			and output is node strength matrix (n*m), n: number of regions and m: number of subjects
 
-Descriptions of scripts:      (order these as above)                                  ………………………………………………….
-[node_strenth]=Node_strength(FC)
+	•	[mixed,p,t,estimatet]=MM_analysis(response,random,X,G) will do linear mixed model. 
+		Inputs: 
+		       response: node strength, factor loadings, change in node strength from pre to post or other desired feature (based on your study) as a n*m 			matrix
+			random: random effects design matrix
+			X: fixed effect design matrix, create a matrix including the covariates and your variable to interest
+			G: grouping variables for subjects with multiple acquisitions (assign same number to them).
+		Outputs:
+		       mixed: linear mixed model 
+                       p: p-value of the test, returned as a scalar value in the range [0,1]
+        	       t: value of the test statistic
+        	       estimate: model coefficient
 
-This function will calculate the FC node strength and seizure outcomes. 
-Inputs
-    % FC: functional_connectivity matrix (cell)
-Output
-    % Node Strength matrix 
+	•	[fc_corrected]=FC_correction(FC,covariates) will correct your FC feature matrix for covariates by using linear regression model
+		Inputs: 
+		       FC: FC feature matrix (m*n): m: number of subjects and n: number of regions 
+		       covariates: a matrix include your covariates (m*k): m: number of subjects and k: number of covariates 
+		Outputs:
+		       fc_corrected: FC feature matrix corrected for covariates 
 
-………………………………………………….
-[fc_corr] = FC_correction(FC,T,D)
+	•	Figure_plot.m: will plots node strength per edge figures for regions of interest (Figure 1). This script will calculate the node strength by using 			Node_strength.m function, then will correct the post-surgical node strength for post-surgical follow-up and duration of disease prior to 
+                        surgery and pre-surgical node strength for duration of disease prior to surgery by using FC_correction.m function and will plot figure for 			corrected node strength values. 
 
-This function will correct FC for covariate 1 (postsurgical follow-up time) and covariate 2 (duration of disease prior to surgery) by using linear regression
+	•	Example.m: An example of how to organize your data and run co des. 
 
-Inputs:
-	% FC = matrix of functional connectivity values.
-	%T = postsurgical follow-up time
-	%D = duration of disease prior to surgery
-Output:
- 	% fc_corr: FC corrected for postsurgical follow-up time and duration of disease prior to surgery
-………………………………………………….
-
-[lambda,F,nBasis]=factor_analysis(FC_node)
-
-This function will calculate FC Patterns from 1 node of interest to all other connected nodes
-    
-Input:
-	% FC: functional connectivity of node of interest (m*n)
-	% m: number of subjects
-	% n: number of regions connected to the node of interest
-     
-Output:
-	% Lambda:  factor loadings matrix (lambda)
-	% F: factor scores 
-	% nBasis: number of factors (nBasis)
-
-………………………………………………….
-
-[LME]=LMM_analysis(response,random,X,G)
-
-This function will do linear mixed model for node strength, and pattern loading
-
- Inputs
-    % response: postsurgical feature matrix (node strength or factor loading), response
-    % random: presurgical feature matrix, random-effects design matrix
-    % X: fixed-effects design matrix X [ones, seizure outcome,duration of disease prior to surgery, postsurgical follow-up time]
-    % G: grouping
-
-Output:
-    % linear mixed model 
-
-………………………………………………….
-
-HornParallelAnalysis(data, K)
-Function HornParallelAnalysis.m simulates a distribution of eigenvalues by resampling a set of random variables of the real data size, and compares the eigenvalues of the real data and the distribution of eigenvalues from simulation; then the number of retained basis factors is decided by keeping those who are bigger than 95% of simulated distribution of eigenvalues. This is to implement the parallel analysis approach proposed by Horn (1965) and developed by Ledesma et al. (2007).
-
-………………………………………………
-Plot_FC_patterns:
-This code will plot figures 3, 4 and 5.
-
-For plotting you need to load the lambda (output of factor_analysis) and define which patterns you want to plot (each column is related to one pattern).
-
-Here F_CCO, F_ICO and F_IPIns are results of factor analysis for our nodes of interest. 
-
-                                           ………………………………………………
