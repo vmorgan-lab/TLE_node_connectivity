@@ -28,7 +28,9 @@ Note:  All provided material to redo our results are in Data folder.
 
 Scripts:
 
-	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node: input is functional connectivity matrix (n*n*m) 			and output is node strength matrix (n*m), n: number of regions and m: number of subjects
+	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node.
+                 input:  functional connectivity matrix (n*n*m) 			        
+		 output: node strength matrix (n*m), n: number of regions and m: number of subjects
 
 	•	[mixed,p,t,estimatet]=MM_analysis(response,random,X,G) will do linear mixed model. 
 		Inputs: 
@@ -52,5 +54,5 @@ Scripts:
 	•	Figure_plot.m: will plots node strength per edge figures for regions of interest (Figure 1). This script will calculate the node strength by using 			Node_strength.m function, then will correct the post-surgical node strength for post-surgical follow-up and duration of disease prior to 
                         surgery and pre-surgical node strength for duration of disease prior to surgery by using FC_correction.m function and will plot figure for 			corrected node strength values. 
 
-	•	Example.m: An example of how to organize your data and run co des. 
+	•	Example.m: An example of how to organize your data and run codes. 
 
