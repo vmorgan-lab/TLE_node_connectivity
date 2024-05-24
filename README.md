@@ -29,12 +29,12 @@ Note:  All provided material to redo our results are in Data folder.
 # Scripts:
 
 	•	[node_strength]=Node_strength(FC) will calculate the node strength for each subject for each node.
-                 input:  functional connectivity matrix (n*n*m) 			        
-		 output: node strength matrix (n*m), n: number of regions and m: number of subjects
+                Inputs: functional connectivity matrix (n*n*m) 			        
+		Outputs: node strength matrix (n*m), n: number of regions and m: number of subjects
 
 	•	[mixed,p,t,estimatet]=MM_analysis(response,random,X,G) will do linear mixed model. 
 		Inputs: 
-		       response: node strength, factor loadings, change in node strength from pre to post or other desired feature (based on your study) as a n*m 			matrix
+			response: node strength, factor loadings, change in node strength from pre to post or other desired feature (based on your study) as a n*m 			matrix
 			random: random effects design matrix
 			X: fixed effect design matrix, create a matrix including the covariates and your variable to interest
 			G: grouping variables for subjects with multiple acquisitions (assign same number to them).
