@@ -17,7 +17,8 @@ To run this set of scripts you will need the following inputs:
 
 Note:  add more variables (as a vector) or remove each of the variables (duration of disease and post surgical follow-up variables) based on your study.
 
- We provide:
+ We provide:   
+ 
  	•	Post-surgical and pre-surgical Functional connectivity matrices of our cohort (FC_post.mat, FC_pre.mat)
 	•	Surgical outcome values of our cohort (Outcome.mat)
 	•	Duration of disease prior to surgery values of our cohort (Duration.mat)
